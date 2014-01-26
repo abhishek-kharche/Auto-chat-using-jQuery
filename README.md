@@ -3,7 +3,7 @@ Auto-chat-using-jQuery
 
 This is a project I developed while learning HTML, CSS, JavaScript and JQuery. 
 It is a simple UI which can chat with you. It's functions are limited and it can only answer certain questions. 
-It can answer following questions: 
+It can answer following questions: <br/>
   how are you, 
   what is the current time,
   where do you live, 
