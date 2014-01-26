@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>jQuery Auto Chat</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script type="text/javascript" src="js/jquery-2.0.3.js"></script>
+		<link rel="stylesheet" href="css/main.css" type="text/css">
+	</head>
+	<body>
+		<!-- create a header -->
+		<div id="header">
+			<h1><i>Auto chat using jQuery</i></h1>
+		</div>
+		<div id="container">
+		</div>
+		<div id="controls">
+			<textarea id="txtarea" placeholder="Enter your message.."></textarea>
+			<button = id="buttn">Send</button>
+			<br>
+			<input checked type="checkbox" id="entersend"/>
+			<label>Enter is send</label>
+		</div>
+		
+		<script type="text/javascript">
+			var username = "";
+			function sendmsg (msg){
+				var preState = $("#container").html();
+				if(preState.length != 3){
+					preState = preState + "<br>";
+				}
+				$("#container").html(preState + "<span class='thismsg'>" + "<span class='computer'> Computer: </span>" 
+										+ msg + "</span>");
+				$(".thismsg").hide();
+				$(".thismsg").delay(400).fadeIn();
+				$(".thismsg").removeClass("thismsg");
+			
+			}
+			
+			function get_user(){
+				sendmsg("Hello, what is your name?");
+			}
+			
+			function algo(msg){
+				if (username.length < 3){
+					username = msg;
+					sendmsg("Hi " + username + ", how are you today?");
+				}else if(msg.indexOf("how are you")>=0){
+					sendmsg("Thanks, I am good.");
+				}else if((msg.indexOf("you live")>=0) || (msg.indexOf("u live")>=0)){
+					sendmsg("I live in United States.");
+				}else if((msg.indexOf("you from")>=0) || (msg.indexOf("u from")>=0)){
+					sendmsg("I am from Mumbai(India).");
+				}else if((msg.indexOf("your name")>=0) || (msg.indexOf("ur name")>=0)){
+					sendmsg("I don't have a name, you can call me anything you want...");
+				}else if((msg.indexOf("your age")>=0) || (msg.indexOf("ur age")>=0)){
+					sendmsg("My age is 1 day.");
+				}else if((msg.indexOf("you eat")>=0) || (msg.indexOf("u eat")>=0)){
+					sendmsg("I don't eat anything, I run on electricity.");
+				}else if((msg.indexOf("you look")>=0) || (msg.indexOf("u look")>=0)){
+					sendmsg("I don't have any appearance.");
+				}else if((msg.indexOf("your hobbies")>=0) || (msg.indexOf("ur hobbies")>=0)){
+					sendmsg("I like to chat.");
+				}else if((msg.indexOf("nice day")>=0) || (msg.indexOf("good day")>=0) || (msg.indexOf("good night")>=0) || (msg.indexOf("good morning")>=0)){
+					sendmsg("Have a nice day.");
+				}else if((msg.indexOf("where in usa")>=0) || (msg.indexOf("where in USA")>=0) || (msg.indexOf("where in united")>=0) || (msg.indexOf("where in United")>=0)){
+					sendmsg("I am residing on the cloud in United States.");
+				}else if((msg.indexOf("nice talking with you")>=0) || (msg.indexOf("bye")>=0) || (msg.indexOf("see you")>=0)){
+					sendmsg("Thank you for talking with me, bye.");
+				}else if((msg.indexOf("time")>=0) || (msg.indexOf("hour")>=0)){
+					var time = new Date();
+					hour = time.getHours();
+					if (hour > 12){
+						hour = hour - 12;
+						sendmsg("Current time is " + hour + ":" + time.getMinutes() + " PM.");
+					}else{
+						sendmsg("Current time is " + hour + ":" + time.getMinutes() + " AM.");
+					}				
+				}else if((msg.indexOf("say")>=0) || (msg.indexOf("say something")>=0)){
+					sendmsg("You ask me something.");
+				}else if((msg.indexOf("lol")>=0) || (msg.indexOf("haha")>=0)){
+					sendmsg("That was not funny.");
+				}else if(msg.indexOf("?")>=0){
+					sendmsg("Try googling it, I don't have answer for that question.");
+				}
+			}
+		
+			$(function(){										<!-- This is a main function of javascript-->
+				get_user();
+				$("#txtarea").keypress(function(event){			<!-- This function catches every keypresses in selected area (textarea)-->
+					if(event.which == 13){						<!-- 13 is a number assigned to enter key-->
+						if($("#entersend").prop("checked")){	<!-- prop function checks the properties of checkbox-->
+							$("#buttn").click();
+							event.preventDefault();				<!-- Inbuilt function in jQuery to prevent new line when enter is pressed-->
+						}
+					}
+				});
+				
+				$("#buttn").click(function(){
+					var msg= $("#txtarea").val();				<!-- Stores the current typed message-->
+					$("#txtarea").val("");						<!-- Make area blank-->
+					var username = "<span class='user'> You: </span>"
+					if(msg != ""){
+						var preState = $("#container").html();		<!-- Save the content present in container-->
+						if(preState.length != 3){
+							preState = preState + "<br>";
+						}
+						$("#container").html(preState + username + msg);<!-- Append the current message with the previos message in the container-->
+						$("#container").scrollTop($("#container").prop("scrollHeight"));	<!-- To go with the text, scroll till container's height-->								
+						algo(msg);			
+					}
+				});
+			});
+			
+		</script>
+		
+	</body>
+</html>
